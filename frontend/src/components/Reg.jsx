@@ -14,6 +14,19 @@ export function Reg() {
     e.preventDefault();
     setError('');
     
+    if (full_name.length < 5) {
+      setError('ФИО должно быть минимум 5 символов');
+      return;
+    }
+    if (auth.length < 3) {
+      setError('Логин должен быть минимум 3 символа');
+      return;
+    }
+    if (password.length < 4) {
+      setError('Пароль должен быть минимум 4 символа');
+      return;
+    }
+    
     try {
       const response = await fetch('http://localhost:5000/reg', {
         method: 'POST',

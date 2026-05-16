@@ -29,7 +29,7 @@ export function Auth() {
       
       if (data.success && data.data.length > 0) {
         localStorage.setItem('user', JSON.stringify(data.data[0]));
-        navigate('/requests');
+        navigate('/req');
       } else {
         setError('Неверный логин или пароль');
       }
