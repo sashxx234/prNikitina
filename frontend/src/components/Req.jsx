@@ -6,23 +6,27 @@ export function Req() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchRequests = async () => {
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (!user) {
-        navigate('/auth');
-        return;
-      }
-      try {
-        const response = await fetch(`http://localhost:5000/requests/${user.id}`);
-        const data = await response.json();
-        setRequests(data);
-      } catch (error) {
-        console.error('Ошибка:', error);
-      }
-    };
-
-    fetchRequests();
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      navigate('/auth');
+      return;
+    }
+    if (user.login === 'beauty') {
+      navigate('/admin');
+      return;
+    }
+    fetchRequests(user.id);
   }, []);
+
+  const fetchRequests = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/requests/${userId}`);
+      const data = await response.json();
+      setRequests(data);
+    } catch (error) {
+      console.error('Ошибка:', error);
+    }
+  };
 
   return (
     <div>

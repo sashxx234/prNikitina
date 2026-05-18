@@ -43,6 +43,13 @@ app.get('/masters', async (req, res) => {
   res.json({ masters: results });
 });
 
+app.get('/requests', async (req, res) => {
+  const [results] = await connection.query(
+    "SELECT r.*, m.name as master_name, s.name as status_name FROM request r JOIN master m ON r.id_master = m.id JOIN status s ON r.id_status = s.id"
+  );
+  res.json(results);
+});
+
 app.get('/requests/:userId', async (req, res) => {
   const [results] = await connection.query(
     "SELECT r.*, m.name as master_name, s.name as status_name FROM request r JOIN master m ON r.id_master = m.id JOIN status s ON r.id_status = s.id WHERE r.id_user = ?",
@@ -57,6 +64,17 @@ app.post('/requests', async (req, res) => {
     "INSERT INTO request (id_user, id_master, id_status, booking_datetime) VALUES (?, ?, 1, ?)",
     [user_id, master_id, booking_datetime]
   );
+  res.json({ success: true });
+});
+
+app.get('/users', async (req, res) => {
+  const [results] = await connection.query("SELECT id, full_name, phone FROM user");
+  res.json({ success: true, users: results });
+});
+
+app.put('/requests/status', async (req, res) => {
+  const { request_id, status_id } = req.body;
+  await connection.query("UPDATE request SET id_status = ? WHERE id = ?", [status_id, request_id]);
   res.json({ success: true });
 });
 

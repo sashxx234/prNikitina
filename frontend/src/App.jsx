@@ -3,7 +3,7 @@ import { Reg } from "./components/Reg";
 import { Auth } from "./components/Auth";
 import { Req } from "./components/Req";
 import { FormReq } from "./components/FormReq";
-// import { Adm } from "./components/Adm";
+import { Adm } from "./components/Adm";
 
 function App() {
   return (
@@ -14,8 +14,8 @@ function App() {
         <Route path="/register" element={<Reg />} />
         <Route path="/req" element={<Req />} />
         <Route path="/form-req" element={<FormReq />} />
-        {/* <Route path="/admin" element={<Adm />} /> */}
-      </Routes>
+        <Route path="/admin" element={<Adm />} />
+      </Routes> 
     </BrowserRouter>
   );
 }
